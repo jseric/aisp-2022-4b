@@ -11,11 +11,73 @@ typedef struct
     float relativePoints;
 } Student;
 
+int studentCount(FILE *fp, int *n, char str[]){
+
+    while (!feof(fp))
+    {
+        fgets(str, 128, fp);
+        (*n)++;
+    }
+
+    return 1;
+}
+
+int fillArray(Student arr[], FILE *fp, char str[]){
+    
+    int counter = 0;
+
+    while (!feof(fp))
+    {
+        arr[counter].relativePoints = 0;
+
+        fgets(str, 127, fp);
+        sscanf(str, "%s %s %d", arr[counter].name, arr[counter].surname, &arr[counter].absolutePoints);
+        counter++;
+    }
+
+    return 1;
+}
+
+int findMaxPoints(Student arr[], int len, int *max){
+
+    for(int c = 0; c < len; c++){
+        if (arr[c].absolutePoints > (*max))
+        {
+            (*max) = arr[c].absolutePoints;
+        }
+    }
+
+    return 1;
+}
+
+int calcRelativePoints(Student arr[], int len, int maxPoints){
+    for (int i = 0; i < len; i++)
+    {
+        arr[i].relativePoints = (float)arr[i].absolutePoints / (float)maxPoints * 100;
+    }
+
+    return 1;
+}
+
+int printResults(Student arr[], int len){
+
+    for(int i = 0; i < len; i++){
+
+        printf("%s %s %d %f\n", arr[i].name, arr[i].surname, arr[i].absolutePoints, arr[i].relativePoints);
+
+    }
+
+
+    return 1;
+}
+
 int main()
 {
     Student *students;
     int numberOfStudents = 0;
     char str[128] = "";
+    int i = 0;
+    int maxPoints = 0;
 
     FILE *fStudentResults = NULL;
     fStudentResults = fopen("students.txt", "r");
@@ -26,37 +88,17 @@ int main()
         return -1;
     }
 
-    while (!feof(fStudentResults))
-    {
-        fgets(str, 128, fStudentResults);
-        numberOfStudents++;
-    }
+    studentCount(fStudentResults, &numberOfStudents, str);
 
     students = (Student *)malloc(numberOfStudents * sizeof(Student));
     rewind(fStudentResults);
 
-    int i = 0;
-    int maxPoints = 0;
-    while (!feof(fStudentResults))
-    {
-        students[i].relativePoints = 0;
+    fillArray(students, fStudentResults, str);
+    findMaxPoints(students, numberOfStudents, &maxPoints);
+    calcRelativePoints(students, numberOfStudents, maxPoints);
 
-        fgets(str, 127, fStudentResults);
-        sscanf(str, "%s %s %d", students[i].name, students[i].surname, &students[i].absolutePoints);
-
-        if (students[i].absolutePoints > maxPoints)
-        {
-            maxPoints = students[i].absolutePoints;
-        }
-        i++;
-    }
-
-    for (int i = 0; i < numberOfStudents; i++)
-    {
-        students[i].relativePoints = (float)students[i].absolutePoints / (float)maxPoints * 100;
-
-        printf("%s %s %d %f\n", students[i].name, students[i].surname, students[i].absolutePoints, students[i].relativePoints);
-    }
+    printResults(students, numberOfStudents);
+    
 
     fclose(fStudentResults);
     free(students);
