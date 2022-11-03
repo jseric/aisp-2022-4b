@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <string.h>
 
-int insertStart(Node **head, char nameIn[], char lastnameIn[], int yobIn)
+int insertStart(struct Node **head, char nameIn[], char lastnameIn[], int yobIn)
 {
-    Node *newNode;
-    newNode = (Node *)malloc(sizeof(Node));
+    struct Node *newNode;
+    newNode = (struct Node *)malloc(sizeof(struct Node));
     if (NULL == newNode)
     {
         printf("Memory allocation failed!\n");
@@ -22,16 +22,16 @@ int insertStart(Node **head, char nameIn[], char lastnameIn[], int yobIn)
 
     return 1;
 }
-int insertEnd(Node *head, char nameIn[], char lastnameIn[], int yobIn)
+int insertEnd(struct Node *head, char nameIn[], char lastnameIn[], int yobIn)
 {
-    Node *position = head;
+    struct Node *position = head;
 
     while (position->next != NULL)
     {
         position = position->next;
     }
 
-    position->next = (Node *)malloc(sizeof(Node));
+    position->next = (struct Node *)malloc(sizeof(struct Node));
     if (NULL == position->next)
     {
         printf("Memory allocation failed!\n");
@@ -47,7 +47,7 @@ int insertEnd(Node *head, char nameIn[], char lastnameIn[], int yobIn)
     return 1;
 }
 
-int printList(Node *position)
+int printList(struct Node *position)
 {
     if (NULL == position)
     {
@@ -64,9 +64,26 @@ int printList(Node *position)
     return 1;
 }
 
-int findLName(Node *head, char targetLName[])
+int findLName(struct Node *head, char* targetLName)
 {
-    if (head == NULL)
+    struct Node* current = head;
+
+    if (NULL == current) return -1;
+
+    while(current != NULL){
+        if(!strcmpi(current->data.lastname, targetLName)){
+            printf("Person found!\n%s %s %d\n", current->data.name, current->data.lastname,
+                current->data.yearOfBirth);
+            return 1;
+        }
+        current = current->next;
+    }
+
+    printf("Person not found.\n");
+    return 0;
+    
+
+    /*if (head == NULL)
     {
         return -1;
     }
@@ -76,21 +93,24 @@ int findLName(Node *head, char targetLName[])
         return 1;
     }
     return findLName(head->next, targetLName);
+    */
 }
 
-int removeNode(Node *head, char targetLName[])
+int removeNode(struct Node *head, char targetLName[])
 {
-    Node *temp;
+    struct Node *temp;
     while (head->next != NULL)
     {
-        if (strcmp(head->next->data.lastname, targetLName))
+        if (!strcmpi(head->next->data.lastname, targetLName))
         {
             printf("Deletion successful!\n");
             temp = head->next;
             head->next = temp->next;
             free(temp);
+            return 2;
         }
         head = head->next;
     }
+    printf("Person not found.\n");
     return 1;
 }

@@ -5,8 +5,8 @@ typedef struct _Person
     int yearOfBirth;
 } Person;
 
-typedef struct _Node
+struct Node
 {
     Person data;
-    struct _Node * next;
-} Node;
+    struct Node * next;
+};

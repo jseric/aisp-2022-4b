@@ -7,8 +7,8 @@
 int main()
 {
     int choice = 0;
-    Node *head = NULL;
-    head = (Node *)malloc(sizeof(Node));
+    struct Node *head = NULL;
+    head = (struct Node *)malloc(sizeof(struct Node));
     if (NULL == head)
     {
         printf("Initialisation failed!\n");
@@ -31,7 +31,7 @@ int main()
         printf("\t4 - delete from list\n");
         printf("\t5 - print the list\n");
 
-        scanf("%d", &choice);
+        scanf(" %d", &choice);
 
         switch (choice)
         {
@@ -43,7 +43,7 @@ int main()
             char lastName[32];
             int yearOfBirth;
             printf("Name Lastname Birth year:\n");
-            scanf("%s %s %d", name, lastName, yearOfBirth);
+            scanf(" %s %s %d", &name, &lastName, &yearOfBirth);
             insertStart(&head, name, lastName, yearOfBirth);
             break;
         }
@@ -53,7 +53,7 @@ int main()
             char lastName[32];
             int yearOfBirth;
             printf("Name Lastname Birth year:\n");
-            scanf("%s %s %d", name, lastName, yearOfBirth);
+            scanf(" %s %s %d", &name, &lastName, &yearOfBirth);
             insertEnd(head, name, lastName, yearOfBirth);
             break;
         }
@@ -61,16 +61,16 @@ int main()
         {
             char lastName[32];
             printf("Lastname: ");
-            scanf("%s", lastName);
-            findLName(&head, lastName);
+            scanf(" %s", &lastName);
+            findLName(head, lastName);
             break;
         }
         case 4:
         {
             char lastName[32];
             printf("Lastname: ");
-            scanf("%s", lastName);
-            removeNode(&head, lastName);
+            scanf(" %s", &lastName);
+            removeNode(head, lastName);
             break;
         }
         case 5:
