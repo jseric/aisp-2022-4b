@@ -64,16 +64,19 @@ int printList(struct Node *position)
     return 1;
 }
 
-int findLName(struct Node *head, char* targetLName)
+int findLName(struct Node *head, char *targetLName)
 {
-    struct Node* current = head;
+    struct Node *current = head;
 
-    if (NULL == current) return -1;
+    if (NULL == current)
+        return -1;
 
-    while(current != NULL){
-        if(!strcmpi(current->data.lastname, targetLName)){
+    while (current != NULL)
+    {
+        if (strcmp(current->data.lastname, targetLName) != 0)
+        {
             printf("Person found!\n%s %s %d\n", current->data.name, current->data.lastname,
-                current->data.yearOfBirth);
+                   current->data.yearOfBirth);
             return 1;
         }
         current = current->next;
@@ -81,19 +84,6 @@ int findLName(struct Node *head, char* targetLName)
 
     printf("Person not found.\n");
     return 0;
-    
-
-    /*if (head == NULL)
-    {
-        return -1;
-    }
-    if (strcmp(head->next->data.lastname, targetLName))
-    {
-        printf("Person found!\nFirst name: %s; Last name: %s; Year of birth: %d\n", head->data.name, head->data.lastname, head->data.yearOfBirth);
-        return 1;
-    }
-    return findLName(head->next, targetLName);
-    */
 }
 
 int removeNode(struct Node *head, char targetLName[])
@@ -101,9 +91,9 @@ int removeNode(struct Node *head, char targetLName[])
     struct Node *temp;
     while (head->next != NULL)
     {
-        if (!strcmpi(head->next->data.lastname, targetLName))
+        if (strcmp(head->next->data.lastname, targetLName) != 0)
         {
-            printf("Deletion successful!\n");
+            printf("Delete successful!\n");
             temp = head->next;
             head->next = temp->next;
             free(temp);

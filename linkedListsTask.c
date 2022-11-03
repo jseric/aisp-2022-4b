@@ -31,7 +31,7 @@ int main()
         printf("\t4 - delete from list\n");
         printf("\t5 - print the list\n");
 
-        scanf(" %d", &choice);
+        scanf("%d", &choice);
 
         switch (choice)
         {
@@ -43,7 +43,7 @@ int main()
             char lastName[32];
             int yearOfBirth;
             printf("Name Lastname Birth year:\n");
-            scanf(" %s %s %d", &name, &lastName, &yearOfBirth);
+            scanf("%s %s %d", &name, &lastName, &yearOfBirth);
             insertStart(&head, name, lastName, yearOfBirth);
             break;
         }
@@ -53,7 +53,7 @@ int main()
             char lastName[32];
             int yearOfBirth;
             printf("Name Lastname Birth year:\n");
-            scanf(" %s %s %d", &name, &lastName, &yearOfBirth);
+            scanf("%s %s %d", &name, &lastName, &yearOfBirth);
             insertEnd(head, name, lastName, yearOfBirth);
             break;
         }
@@ -61,7 +61,7 @@ int main()
         {
             char lastName[32];
             printf("Lastname: ");
-            scanf(" %s", &lastName);
+            scanf("%s", &lastName);
             findLName(head, lastName);
             break;
         }
@@ -69,7 +69,7 @@ int main()
         {
             char lastName[32];
             printf("Lastname: ");
-            scanf(" %s", &lastName);
+            scanf("%s", &lastName);
             removeNode(head, lastName);
             break;
         }
