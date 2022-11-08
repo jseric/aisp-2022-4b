@@ -64,26 +64,34 @@ int printList(struct Node *position)
     return 1;
 }
 
-int findLName(struct Node *head, char *targetLName)
+struct Node findLName(struct Node *head, char *targetLName)
 {
-    struct Node *current = head;
+    struct Node temp;
 
-    if (NULL == current)
-        return -1;
-
-    while (current != NULL)
+    while (head != NULL)
     {
-        if (strcmp(current->data.lastname, targetLName) != 0)
+        if (strcmp(head->data.lastname, targetLName) == 0)
         {
-            printf("Person found!\n%s %s %d\n", current->data.name, current->data.lastname,
-                   current->data.yearOfBirth);
-            return 1;
+            temp = *head;
         }
-        current = current->next;
+        head = head->next;
     }
+    return temp;
+}
 
-    printf("Person not found.\n");
-    return 0;
+struct Node findPrevious(struct Node *head, char *targetLName)
+{
+    struct Node temp;
+
+    while (head != NULL)
+    {
+        if (strcmp(head->next->data.lastname, targetLName) == 0)
+        {
+            temp = *head;
+        }
+        head = head->next;
+    }
+    return temp;
 }
 
 int removeNode(struct Node *head, char targetLName[])
@@ -102,5 +110,81 @@ int removeNode(struct Node *head, char targetLName[])
         head = head->next;
     }
     printf("Person not found.\n");
+    return 1;
+}
+
+void addBefore(struct Node *head, char targetLName[], char nameIn[], char lastnameIn[], int yobIn)
+{
+    struct Node *newNode;
+    struct Node predecessor;
+    struct Node targetEl;
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+
+    strcpy(newNode->data.name, nameIn);
+    strcpy(newNode->data.lastname, lastnameIn);
+    newNode->data.yearOfBirth = yobIn;
+
+    predecessor = findPrevious(head, targetLName);
+    targetEl = findLName(head, targetLName);
+
+    predecessor.next = newNode;
+    newNode->next = &targetEl;
+}
+
+void addAfter(struct Node *head, char targetLName[], char nameIn[], char lastnameIn[], int yobIn)
+{
+    struct Node *newNode;
+    struct Node targetEl;
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+
+    strcpy(newNode->data.name, nameIn);
+    strcpy(newNode->data.lastname, lastnameIn);
+    newNode->data.yearOfBirth = yobIn;
+
+    targetEl = findLName(head, targetLName);
+
+    newNode->next = targetEl.next;
+    targetEl.next = &newNode;
+}
+
+void sortListByLastname(struct Node *head)
+{
+    struct Node *i;
+    struct Node *j;
+    struct Node *jPred;
+    struct Node *end = NULL;
+
+    while (head->next != end)
+    {
+        i = head;
+        jPred = i->next;
+        j = jPred->next;
+
+        while (j != end)
+        {
+            if (strcmp(jPred->data.lastname, j->data.lastname) > 0)
+            {
+                jPred->next = j->next;
+                i->next = j;
+                j->next = jPred;
+            }
+            else
+            {
+                i = jPred;
+            }
+            jPred = j;
+            i = j->next;
+        }
+        end = jPred;
+    }
+}
+
+int readFromFile(struct Node *head)
+{
+    return 1;
+}
+
+int writeInFile(struct Node *head)
+{
     return 1;
 }

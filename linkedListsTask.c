@@ -21,6 +21,9 @@ int main()
     insertStart(&head, "Ivo", "Anic", 1999);
     insertEnd(head, "Jure", "Horvat", 2000);
 
+    struct Node target = findLName(head, "Prezime");
+    printf("%s %s %d", target.data.name, target.data.lastname, target.data.yearOfBirth);
+
     do
     {
         printf("<<<<<< MENU >>>>>>\n");
@@ -30,6 +33,11 @@ int main()
         printf("\t3 - find person by last name\n");
         printf("\t4 - delete from list\n");
         printf("\t5 - print the list\n");
+        printf("\t6 - add before another\n");
+        printf("\t7 - add after another\n");
+        printf("\t8 - sort by last name\n");
+        printf("\t9 - write to file\n");
+        printf("\t10 - read from file\n");
 
         scanf("%d", &choice);
 
@@ -40,21 +48,21 @@ int main()
         case 1:
         {
             char name[32];
-            char lastName[32];
+            char lastname[32];
             int yearOfBirth;
-            printf("Name Lastname Birth year:\n");
-            scanf("%s %s %d", &name, &lastName, &yearOfBirth);
-            insertStart(&head, name, lastName, yearOfBirth);
+            printf("Name Lastname Birth year: ");
+            scanf("%s %s %d", &name, &lastname, &yearOfBirth);
+            insertStart(&head, name, lastname, yearOfBirth);
             break;
         }
         case 2:
         {
             char name[32];
-            char lastName[32];
+            char lastname[32];
             int yearOfBirth;
-            printf("Name Lastname Birth year:\n");
-            scanf("%s %s %d", &name, &lastName, &yearOfBirth);
-            insertEnd(head, name, lastName, yearOfBirth);
+            printf("Name Lastname Birth year: ");
+            scanf("%s %s %d", &name, &lastname, &yearOfBirth);
+            insertEnd(head, name, lastname, yearOfBirth);
             break;
         }
         case 3:
@@ -62,7 +70,9 @@ int main()
             char lastName[32];
             printf("Lastname: ");
             scanf("%s", &lastName);
-            findLName(head, lastName);
+            struct Node target = findLName(head, lastName);
+            printf("First name: %s; Last name: %s; Year of birth: %d\n",
+                   target.data.name, target.data.lastname, target.data.yearOfBirth);
             break;
         }
         case 4:
@@ -74,8 +84,58 @@ int main()
             break;
         }
         case 5:
+        {
             printList(head->next);
             break;
+        }
+        case 6:
+        {
+            char targetLastname[32];
+            char name[32];
+            char lastname[32];
+            int yearOfBirth;
+
+            printf("Name Lastname Birth year: ");
+            scanf("%s %s %d", &name, &lastname, &yearOfBirth);
+
+            printf("\nAdd before element with lastname: ");
+            scanf("%s", &targetLastname);
+
+            addBefore(head, targetLastname, name, lastname, yearOfBirth);
+            break;
+        }
+        case 7:
+        {
+            char targetLastname[32];
+            char name[32];
+            char lastname[32];
+            int yearOfBirth;
+
+            printf("Name Lastname Birth year: ");
+            scanf("%s %s %d", &name, &lastname, &yearOfBirth);
+
+            printf("\nAdd after element with lastname: ");
+            scanf("%s", &targetLastname);
+
+            addAfter(head, targetLastname, name, lastname, yearOfBirth);
+            break;
+        }
+        case 8:
+        {
+            sortListByLastname(head);
+            printList(head->next);
+            break;
+        }
+        case 9:
+        {
+            writeInFile(head);
+            break;
+        }
+        case 10:
+        {
+            readFromFile(head);
+            break;
+        }
         default:
             break;
         }
