@@ -173,7 +173,7 @@ void sortListByLastname(struct Node *head)
                 i = jPred;
             }
             jPred = j;
-            i = j->next;
+            j = j->next;
         }
         end = jPred;
     }
