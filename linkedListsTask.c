@@ -16,13 +16,14 @@ int main()
     }
     head->next = NULL;
 
+    /*
     insertStart(&head, "Ana", "Ivic", 1997);
     insertEnd(head, "Ime", "Prezime", 1998);
     insertStart(&head, "Ivo", "Anic", 1999);
-    insertEnd(head, "Jure", "Horvat", 2000);
+    insertEnd(head, "Jure", "Horvat", 2000); */
 
-    struct Node target = findLName(head, "Prezime");
-    printf("%s %s %d", target.data.name, target.data.lastname, target.data.yearOfBirth);
+    /*struct Node target = findLName(head, "Prezime");
+    printf("%s %s %d", target.data.name, target.data.lastname, target.data.yearOfBirth);*/
 
     do
     {
@@ -31,7 +32,7 @@ int main()
         printf("\t1 - add person to the beginning of list\n");
         printf("\t2 - add person to the end of list\n");
         printf("\t3 - find person by last name\n");
-        printf("\t4 - delete from list\n");
+        printf("\t4 - delete by last name\n");
         printf("\t5 - print the list\n");
         printf("\t6 - add before another\n");
         printf("\t7 - add after another\n");
@@ -39,7 +40,9 @@ int main()
         printf("\t9 - write to file\n");
         printf("\t10 - read from file\n");
 
-        scanf("%d", &choice);
+        scanf(" %d", &choice);
+
+        system("cls");
 
         switch (choice)
         {
@@ -50,7 +53,7 @@ int main()
             char name[32];
             char lastname[32];
             int yearOfBirth;
-            printf("Name Lastname Birth year: ");
+            printf("Name Last name Birth year: ");
             scanf("%s %s %d", &name, &lastname, &yearOfBirth);
             insertStart(&head, name, lastname, yearOfBirth);
             break;
@@ -60,7 +63,7 @@ int main()
             char name[32];
             char lastname[32];
             int yearOfBirth;
-            printf("Name Lastname Birth year: ");
+            printf("Name Last name Birth year: ");
             scanf("%s %s %d", &name, &lastname, &yearOfBirth);
             insertEnd(head, name, lastname, yearOfBirth);
             break;
@@ -68,17 +71,19 @@ int main()
         case 3:
         {
             char lastName[32];
-            printf("Lastname: ");
+            printf("Last name: ");
             scanf("%s", &lastName);
             struct Node target = findLName(head, lastName);
             printf("First name: %s; Last name: %s; Year of birth: %d\n",
                    target.data.name, target.data.lastname, target.data.yearOfBirth);
             break;
         }
-        case 4:
-        {
+        {   
             char lastName[32];
-            printf("Lastname: ");
+                    
+            printf("Available last names: \n");
+            printLNames(head);
+            printf("Last name: ");
             scanf("%s", &lastName);
             removeNode(head, lastName);
             break;
@@ -98,7 +103,10 @@ int main()
             printf("Name Lastname Birth year: ");
             scanf("%s %s %d", &name, &lastname, &yearOfBirth);
 
-            printf("\nAdd before element with lastname: ");
+                    
+            printf("Available last names: \n");
+            printLNames(head);
+            printf("\nAdd before element with last name: ");
             scanf("%s", &targetLastname);
 
             addBefore(head, targetLastname, name, lastname, yearOfBirth);
@@ -111,10 +119,13 @@ int main()
             char lastname[32];
             int yearOfBirth;
 
-            printf("Name Lastname Birth year: ");
+            printf("Name Last name Birth year: ");
             scanf("%s %s %d", &name, &lastname, &yearOfBirth);
 
-            printf("\nAdd after element with lastname: ");
+            
+            printf("Available last names: \n");
+            printLNames(head);
+            printf("Add after element with last name: ");
             scanf("%s", &targetLastname);
 
             addAfter(head, targetLastname, name, lastname, yearOfBirth);
@@ -128,7 +139,7 @@ int main()
         }
         case 9:
         {
-            writeInFile(head);
+            writeToFile(head->next);
             break;
         }
         case 10:
