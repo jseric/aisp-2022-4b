@@ -218,6 +218,63 @@ int main()
     headPol2->next = NULL;
     headSum->next = NULL;
     headMult->next = NULL;
+    int isValid = 0;
+
+    printf("P(x)\n");
+
+    isValid = readPolynomialFromFile(headPol1);
+
+    if (isValid == -1)
+    {
+        deleteList(headPol1);
+        return 0;
+    }
+
+    printf("Q(x)\n");
+
+    isValid = readPolynomialFromFile(headPol2);
+
+    if (isValid == -1)
+    {
+        deleteList(headPol1);
+        deleteList(headPol2);
+        return 0;
+    }
+
+    sortPolynomialsByExponent(headPol1);
+    sortPolynomialsByExponent(headPol2);
+
+    printf("P(x) = ");
+    printList(headPol1->next);
+    printf("\nQ(x) = ");
+    printList(headPol2->next);
+    printf("\nSum: ");
+
+    isValid = sumPolynomials(headPol1->next, headPol2->next, headSum);
+    if (isValid == -1)
+    {
+        deleteList(headPol1);
+        deleteList(headPol2);
+        deleteList(headSum);
+        return 0;
+    }
+
+    printList(headSum->next);
+    printf("\nProduct: ");
+    isValid = multiplyPolynomials(headPol1->next, headPol2->next, headSum);
+    if (isValid == -1)
+    {
+        deleteList(headPol1);
+        deleteList(headPol2);
+        deleteList(headSum);
+        deleteList(headMult);
+        return 0;
+    }
+    printList(headSum->next);
+    deleteList(headPol1);
+    deleteList(headPol2);
+    deleteList(headSum);
+    deleteList(headMult);
 
     return 0;
 }
