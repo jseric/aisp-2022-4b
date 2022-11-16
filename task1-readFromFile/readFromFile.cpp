@@ -1,6 +1,6 @@
-#include <iostream>
-#include <fstream>
-#include <string>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 using namespace std;
 
 typedef struct
@@ -91,6 +91,11 @@ int main()
     studentCount(fStudentResults, &numberOfStudents, str);
 
     students = (Student *)malloc(numberOfStudents * sizeof(Student));
+    if (NULL == students){
+        printf("Dynamic allocation failed.\n");
+        return -1;
+    }
+
     rewind(fStudentResults);
 
     fillArray(students, fStudentResults, str);
