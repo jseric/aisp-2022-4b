@@ -136,6 +136,11 @@ void addBefore(struct Node *head, char targetLName[], char nameIn[], char lastna
     struct Node predecessor;
     struct Node targetEl;
     newNode = (struct Node *)malloc(sizeof(struct Node));
+    if (NULL == newNode)
+    {
+        printf("Memory allocation failed!\n");
+        return;
+    }
 
     strcpy(newNode->data.name, nameIn);
     strcpy(newNode->data.lastname, lastnameIn);
@@ -153,6 +158,11 @@ void addAfter(struct Node *head, char targetLName[], char nameIn[], char lastnam
     struct Node *newNode;
     struct Node targetEl;
     newNode = (struct Node *)malloc(sizeof(struct Node));
+    if (NULL == newNode)
+    {
+        printf("Memory allocation failed!\n");
+        return;
+    }
 
     strcpy(newNode->data.name, nameIn);
     strcpy(newNode->data.lastname, lastnameIn);
@@ -162,6 +172,7 @@ void addAfter(struct Node *head, char targetLName[], char nameIn[], char lastnam
 
     newNode->next = targetEl.next;
     targetEl.next = &newNode;
+    return;
 }
 
 void sortListByLastname(struct Node *head)
@@ -253,4 +264,18 @@ int writeToFile(struct Node *position)
 
     fclose(fp);
     return 1;
+}
+
+int clearList(struct Node *head){
+
+    struct Node *tmp = head;
+    while(NULL != head->next){
+        head = head->next;
+        free(tmp);
+        tmp = head;
+    }
+    printf("List cleared.\n");
+
+    return 1;
+
 }

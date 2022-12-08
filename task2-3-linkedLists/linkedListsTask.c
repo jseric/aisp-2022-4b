@@ -39,10 +39,11 @@ int main()
         printf("\t8 - sort by last name\n");
         printf("\t9 - write to file\n");
         printf("\t10 - read from file\n");
+        printf("\t11 - clear list\n");
 
         scanf(" %d", &choice);
 
-        system("cls");
+        //system("cls");
 
         switch (choice)
         {
@@ -89,7 +90,11 @@ int main()
             break;
         }
         case 5:
-        {
+        {   
+            if (NULL == head->next){
+                printf("List empty!\n");
+                break;
+            }
             printList(head->next);
             break;
         }
@@ -145,6 +150,11 @@ int main()
         case 10:
         {
             readFromFile(head);
+            break;
+        }
+        case 11:
+        {
+            clearList(head);
             break;
         }
         default:
