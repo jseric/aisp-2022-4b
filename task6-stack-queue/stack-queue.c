@@ -29,6 +29,9 @@ int main(){
         printf("\t1 - push to stack\n");
         printf("\t2 - pop from stack\n");
         printf("\t3 - print stack contents\n");
+        printf("\t4 - add to queue\n");
+        printf("\t5 - remove from queue\n");
+        printf("\t6 - print queue contents\n");
 
         scanf(" %d", &choice);
 
@@ -55,7 +58,28 @@ int main(){
         }
         case 3:
         {
-            printStackContents(stackHead->next);
+            printList(stackHead->next);
+            break;
+        }
+        case 4:
+        {
+            printf("Value to queue:\t");
+            scanf(" %d", &input);
+            if (addToQ(input, queueHead) == -1){
+                printf("Error!\n");
+                clearList(&queueHead);
+                return 0;
+            }
+            break;
+        }
+        case 5:
+        {
+            printf("Removed value:\t%d", removeFromQ(queueHead->next));
+            break;
+        }
+        case 6:
+        {
+            printList(queueHead->next);
             break;
         }
         default:

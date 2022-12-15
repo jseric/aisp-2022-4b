@@ -36,7 +36,53 @@ int stackPop(struct Node *top){
 
 }
 
-void printStackContents(struct Node *top){
+int addToQ(int value, struct Node *head){
+
+    //adds to end of list
+
+    struct Node *position = head;
+
+    while (position->next != NULL)
+    {
+        position = position->next;
+    }
+
+    position->next = (struct Node *)malloc(sizeof(struct Node));
+    if (NULL == position->next)
+    {
+        printf("Memory allocation failed!\n");
+        return -1;
+    }
+
+    position->next->val = value;
+
+    position->next->next = NULL;
+
+    return 1;
+}
+
+int removeFromQ(struct Node *top){
+
+    //removes from beginning of list
+
+    if(NULL == top){
+        printf("Queue empty!\n");
+        return -1;
+    }
+    
+    struct Node *tmp = top;
+    int tmpVal = top->val;
+
+    top = top->next;
+    free(tmp);
+
+    return tmpVal;
+
+    return 1;
+}
+
+
+void printList(struct Node *top){
     
     if (NULL == top)
     {
