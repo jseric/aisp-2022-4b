@@ -56,7 +56,11 @@ int main()
             int yearOfBirth;
             printf("Name Last name Birth year: ");
             scanf("%s %s %d", &name, &lastname, &yearOfBirth);
-            insertStart(&head, name, lastname, yearOfBirth);
+            if (insertStart(&head, name, lastname, yearOfBirth) == -1){
+                printf("Error!\n");
+                clearList(&head);
+                return -1;
+            }
             break;
         }
         case 2:
@@ -66,7 +70,11 @@ int main()
             int yearOfBirth;
             printf("Name Last name Birth year: ");
             scanf("%s %s %d", &name, &lastname, &yearOfBirth);
-            insertEnd(head, name, lastname, yearOfBirth);
+            if (insertEnd(head, name, lastname, yearOfBirth) == -1){
+                printf("Error!\n");
+                clearList(&head);
+                return -1;
+            }
             break;
         }
         case 3:
@@ -144,12 +152,20 @@ int main()
         }
         case 9:
         {
-            writeToFile(head->next);
+            if(writeToFile(head->next) == -1){
+                printf("Error!\n");
+                clearList(&head);
+                return -1;
+            }
             break;
         }
         case 10:
         {
-            readFromFile(head);
+            if(readFromFile(head) == -1){
+                printf("Error!\n");
+                clearList(&head);
+                return -1;
+            }
             break;
         }
         case 11:
